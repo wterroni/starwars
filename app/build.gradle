@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.myapplication'
-    compileSdk 32
+    namespace 'com.example.starwars'
+    compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.myapplication"
+        applicationId "com.example.starwars"
         minSdk 23
         targetSdk 31
         versionCode 1
