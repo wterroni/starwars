@@ -1,4 +1,4 @@
-package com.example.starwars.data.model
+package com.example.starwars.categories.data.model
 
 data class CategoriesModel(
     val films: String,
