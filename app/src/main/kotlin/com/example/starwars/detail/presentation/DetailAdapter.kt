@@ -1,4 +1,4 @@
-package com.example.starwars.categories.presentation
+package com.example.starwars.detail.presentation
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -10,14 +10,16 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.starwars.R
-import com.example.starwars.categories.domain.model.Category
+import com.example.starwars.categories.presentation.ICallCategoryDetail
+import com.example.starwars.detail.domain.model.Detail
 import com.squareup.picasso.Picasso
 
-class CategoriesAdapter(
-) : RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
 
-    private val items: MutableList<Category> = mutableListOf()
-    private lateinit var call: ICallCategoryDetail
+class DetailAdapter(
+) : RecyclerView.Adapter<DetailAdapter.ViewHolder>() {
+
+    private val items: MutableList<Detail> = mutableListOf()
+    private lateinit var call: ICallDetail
     private var layoutManager: StaggeredGridLayoutManager? = null
 
     enum class ViewType {
@@ -26,13 +28,13 @@ class CategoriesAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setList(newItems: Array<Category>) {
+    fun setList(newItems: List<Detail>) {
         items.clear()
         items.addAll(newItems)
         notifyDataSetChanged()
     }
 
-    fun setCallDetail(call: ICallCategoryDetail) {
+    fun setCallDetail(call: ICallDetail) {
         this.call = call
     }
 
@@ -46,11 +48,11 @@ class CategoriesAdapter(
         return when (viewType) {
             ViewType.DETAILED.ordinal -> ViewHolder(
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.categories_list_grid, parent, false)
+                    .inflate(R.layout.detail_list_grid, parent, false)
             )
             else -> ViewHolder(
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.categories_list_line, parent, false)
+                    .inflate(R.layout.detail_list_line, parent, false)
             )
         }
     }
@@ -66,16 +68,16 @@ class CategoriesAdapter(
 
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val textView: TextView = view.findViewById(R.id.name_categories)
-        private val cardView: CardView = view.findViewById(R.id.categoriesCard)
-        private val imageView: ImageView = view.findViewById(R.id.image_categories)
+        private val textView: TextView = view.findViewById(R.id.name_detail)
+        private val cardView: CardView = view.findViewById(R.id.card_detail)
+        private val imageView: ImageView = view.findViewById(R.id.image_detail)
 
         @SuppressLint("NotifyDataSetChanged")
-        fun bind(item: Category) {
+        fun bind(item: Detail) {
             Picasso.with(itemView.context).load(item.imageUrl).into(imageView)
             textView.text = item.name
             cardView.setOnClickListener {
-                call.callCategoryDetail(item)
+                call.callDetail(item)
             }
         }
     }

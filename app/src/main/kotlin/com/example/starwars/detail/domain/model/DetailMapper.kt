@@ -15,7 +15,7 @@ class DetailMapperImpl : DetailMapper {
     override fun toFilmDetail(filmsModel: FilmsModel): List<Detail> {
         return filmsModel.results.map {
                 Detail(
-                    title = it.title,
+                    name = it.title,
                     imageUrl = getUrl(it.url, FILMS_CATEGORY)
                 )
         }
@@ -24,7 +24,7 @@ class DetailMapperImpl : DetailMapper {
     override fun toPeopleDetail(filmsModel: PeopleModel): List<Detail> {
         return filmsModel.results.map {
             Detail(
-                title = it.name,
+                name = it.name,
                 imageUrl = getUrl(it.url, PEOPLE_CATEGORY)
             )
         }
@@ -33,7 +33,7 @@ class DetailMapperImpl : DetailMapper {
     override fun toPlanetsDetail(filmsModel: PlanetsModel): List<Detail> {
         return filmsModel.results.map {
             Detail(
-                title = it.name,
+                name = it.name,
                 imageUrl = getUrl(it.url, PLANETS_CATEGORY)
             )
         }
@@ -42,7 +42,7 @@ class DetailMapperImpl : DetailMapper {
     override fun toSpeciesDetail(filmsModel: SpeciesModel): List<Detail> {
         return filmsModel.results.map {
             Detail(
-                title = it.name,
+                name = it.name,
                 imageUrl = getUrl(it.url, SPECIES_CATEGORY)
             )
         }
@@ -51,7 +51,7 @@ class DetailMapperImpl : DetailMapper {
     override fun toVehiclesDetail(filmsModel: VehiclesModel): List<Detail> {
         return filmsModel.results.map {
             Detail(
-                title = it.name,
+                name = it.name,
                 imageUrl = getUrl(it.url, VEHICLES_CATEGORY)
             )
         }
@@ -60,7 +60,7 @@ class DetailMapperImpl : DetailMapper {
     override fun toStarShipsDetail(filmsModel: StarShipsModel): List<Detail> {
         return filmsModel.results.map {
             Detail(
-                title = it.name,
+                name = it.name,
                 imageUrl = getUrl(it.url, STARSHIPS_CATEGORY)
             )
         }

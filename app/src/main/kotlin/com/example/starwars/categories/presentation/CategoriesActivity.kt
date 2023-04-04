@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.starwars.R
 import com.example.starwars.categories.domain.model.Category
 import com.example.starwars.databinding.CategoriesActivityBinding
+import com.example.starwars.detail.presentation.DetailActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CategoriesActivity : AppCompatActivity(), IcallDetail {
+class CategoriesActivity : AppCompatActivity(), ICallCategoryDetail {
     //private lateinit var binding: CategoriesActivityBinding
     private val binding by lazy {
         CategoriesActivityBinding.inflate(layoutInflater)
@@ -63,8 +64,8 @@ class CategoriesActivity : AppCompatActivity(), IcallDetail {
         }
     }
 
-    override fun callDetail(category: Category) {
-        // TODO callCategoryDetail(category)
+    override fun callCategoryDetail(category: Category) {
+        startActivity(DetailActivity.newInstance(this, category.categoryType))
     }
 
     private fun setListeners() {

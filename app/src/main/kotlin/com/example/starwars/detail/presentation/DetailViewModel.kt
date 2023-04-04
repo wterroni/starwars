@@ -1,6 +1,7 @@
 package com.example.starwars.detail.presentation
 
 import androidx.lifecycle.MutableLiveData
+import com.example.starwars.categories.domain.model.CategoryType
 import com.example.starwars.detail.domain.DetailInteractor
 import com.example.starwars.detail.domain.model.Detail
 import com.example.starwars.util.BaseViewModel
@@ -11,7 +12,18 @@ class DetailViewModel(private val interactor: DetailInteractor): BaseViewModel()
     val detailOb = MutableLiveData<List<Detail>>()
     val detailExceptionOb = MutableLiveData<Exception>()
 
-    fun getFilmsDetail() {
+    fun getDetail(categoryType: String) {
+        when (categoryType.uppercase()) {
+            "FILMS" -> getFilmsDetail()
+            "PEOPLE" -> getPeopleDetail()
+            "PLANETS" -> getPlanetsDetail()
+            "SPECIES" -> getSpeciesDetail()
+            "VEHICLES" -> getVehiclesDetail()
+            "STARSHIPS" -> getStarshipsDetail()
+        }
+    }
+
+    private fun getFilmsDetail() {
         launch {
             try {
                 val films = interactor.getFilmsDetail()
@@ -22,7 +34,7 @@ class DetailViewModel(private val interactor: DetailInteractor): BaseViewModel()
         }
     }
 
-    fun getPeopleDetail() {
+    private fun getPeopleDetail() {
         launch {
             try {
                 val films = interactor.getPeopleDetail()
@@ -33,7 +45,7 @@ class DetailViewModel(private val interactor: DetailInteractor): BaseViewModel()
         }
     }
 
-    fun getPlanetsDetail() {
+    private fun getPlanetsDetail() {
         launch {
             try {
                 val films = interactor.getPlanetsDetail()
@@ -44,7 +56,7 @@ class DetailViewModel(private val interactor: DetailInteractor): BaseViewModel()
         }
     }
 
-    fun getSpeciesDetail() {
+    private fun getSpeciesDetail() {
         launch {
             try {
                 val films = interactor.getSpeciesDetail()
@@ -55,7 +67,7 @@ class DetailViewModel(private val interactor: DetailInteractor): BaseViewModel()
         }
     }
 
-    fun getVehiclesDetail() {
+    private fun getVehiclesDetail() {
         launch {
             try {
                 val films = interactor.getVehiclesDetail()
@@ -66,7 +78,7 @@ class DetailViewModel(private val interactor: DetailInteractor): BaseViewModel()
         }
     }
 
-    fun getStarshipsDetail() {
+    private fun getStarshipsDetail() {
         launch {
             try {
                 val films = interactor.getStarshipsDetail()
