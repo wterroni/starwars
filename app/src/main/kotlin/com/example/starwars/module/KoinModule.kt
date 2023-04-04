@@ -6,12 +6,10 @@ import org.koin.android.ext.koin.androidContext
 fun startKoin(context: Context) {
     org.koin.core.context.startKoin {
         androidContext(context)
-        modules(appModules + featureModules)
+        modules(appModules + viewModelsModule)
     }
 }
 
 val appModules = listOf(
     dataModule
 )
-
-val featureModules = listOf(viewModelsModule)

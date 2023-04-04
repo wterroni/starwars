@@ -4,7 +4,7 @@ import com.example.starwars.categories.data.model.CategoriesModel
 import retrofit2.http.GET
 
 interface StarWarsService {
-    @GET
+    @GET(".")
     suspend fun getCategories(
     ): CategoriesModel
 }
