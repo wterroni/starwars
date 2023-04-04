@@ -1,7 +1,7 @@
 package com.example.starwars.categories.domain
 
-import com.example.starwars.categories.data.model.CategoriesRepository
-import com.example.starwars.categories.domain.data.Category
+import com.example.starwars.categories.data.CategoriesRepository
+import com.example.starwars.categories.domain.model.Category
 
 interface CategoriesInteractor {
     suspend fun getCategories(): Array<Category>

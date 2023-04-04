@@ -1,9 +1,8 @@
 package com.example.starwars.categories.presentation
 
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.MutableLiveData
 import com.example.starwars.categories.domain.CategoriesInteractor
-import com.example.starwars.categories.domain.data.Category
+import com.example.starwars.categories.domain.model.Category
 import com.example.starwars.util.BaseViewModel
 import kotlinx.coroutines.launch
 
@@ -16,8 +15,7 @@ class CategoriesViewModel(private val interactor: CategoriesInteractor): BaseVie
         getCategories()
     }
 
-    //@VisibleForTesting
-    fun getCategories() {
+    private fun getCategories() {
         launch {
             try {
                 val categories = interactor.getCategories()

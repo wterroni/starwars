@@ -1,7 +1,7 @@
-package com.example.starwars.categories.module
+package com.example.starwars.categories.di
 
-import com.example.starwars.categories.data.model.CategoriesRepository
-import com.example.starwars.categories.data.model.CategoriesRepositoryImpl
+import com.example.starwars.categories.data.CategoriesRepository
+import com.example.starwars.categories.data.CategoriesRepositoryImpl
 import com.example.starwars.categories.domain.CategoriesInteractor
 import com.example.starwars.categories.domain.CategoriesInteractorImpl
 import com.example.starwars.categories.domain.CategoriesMapper

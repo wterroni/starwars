@@ -1,4 +1,4 @@
-package com.example.starwars.categories.domain.data
+package com.example.starwars.categories.domain.model
 
 data class Category(
     val name: String,

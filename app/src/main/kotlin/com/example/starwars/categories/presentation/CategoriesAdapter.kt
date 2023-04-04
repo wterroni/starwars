@@ -10,7 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.starwars.R
-import com.example.starwars.categories.domain.data.Category
+import com.example.starwars.categories.domain.model.Category
 import com.squareup.picasso.Picasso
 
 class CategoriesAdapter(

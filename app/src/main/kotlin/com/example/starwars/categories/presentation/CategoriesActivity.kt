@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.starwars.R
-import com.example.starwars.categories.domain.data.Category
+import com.example.starwars.categories.domain.model.Category
 import com.example.starwars.databinding.CategoriesActivityBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

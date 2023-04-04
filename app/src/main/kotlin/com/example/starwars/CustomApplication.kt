@@ -1,7 +1,7 @@
 package com.example.starwars
 
 import android.app.Application
-import com.example.starwars.module.startKoin
+import com.example.starwars.di.startKoin
 
 
 class CustomApplication: Application() {

@@ -1,4 +1,4 @@
-package com.example.starwars.module
+package com.example.starwars.di
 
 import com.example.starwars.data.StarWarsService
 import com.example.starwars.util.RetrofitFactory

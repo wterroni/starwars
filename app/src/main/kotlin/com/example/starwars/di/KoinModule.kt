@@ -1,4 +1,4 @@
-package com.example.starwars.module
+package com.example.starwars.di
 
 import android.content.Context
 import org.koin.android.ext.koin.androidContext

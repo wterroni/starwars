@@ -1,5 +1,6 @@
-package com.example.starwars.categories.data.model
+package com.example.starwars.categories.data
 
+import com.example.starwars.categories.data.model.CategoriesModel
 import com.example.starwars.data.StarWarsService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
