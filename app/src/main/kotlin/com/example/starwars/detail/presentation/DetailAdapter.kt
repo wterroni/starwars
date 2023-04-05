@@ -1,9 +1,12 @@
 package com.example.starwars.detail.presentation
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -16,9 +19,10 @@ import com.squareup.picasso.Picasso
 
 
 class DetailAdapter(
-) : RecyclerView.Adapter<DetailAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<DetailAdapter.ViewHolder>(), Filterable {
 
-    private val items: MutableList<Detail> = mutableListOf()
+    var items: MutableList<Detail> = mutableListOf()
+    var itemsFiltered: MutableList<Detail> = mutableListOf()
     private lateinit var call: ICallDetail
     private var layoutManager: StaggeredGridLayoutManager? = null
 
@@ -27,10 +31,9 @@ class DetailAdapter(
         DETAILED
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setList(newItems: List<Detail>) {
-        items.clear()
-        items.addAll(newItems)
+    fun addData(list: List<Detail>) {
+        items = list as ArrayList<Detail>
+        itemsFiltered = items
         notifyDataSetChanged()
     }
 
@@ -42,7 +45,7 @@ class DetailAdapter(
         this.layoutManager = layoutManager
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = itemsFiltered.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
@@ -58,7 +61,7 @@ class DetailAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(itemsFiltered[position])
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -99,6 +102,40 @@ class DetailAdapter(
             textFive.text = item.textFive
             cardView.setOnClickListener {
                 call.callDetail(item)
+            }
+        }
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charString = constraint?.toString() ?: ""
+                if (charString.isEmpty()) itemsFiltered = items else {
+                    val filteredList = ArrayList<Detail>()
+                    items
+                        .filter {
+                            (it.textOne.uppercase().contains(constraint!!))
+
+                        }
+                        .forEach { filteredList.add(it) }
+                    itemsFiltered = filteredList
+
+                    Log.e("performFiltering: t1: ", filteredList.size.toString())
+
+                }
+                return FilterResults().apply { values = itemsFiltered }
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+
+                itemsFiltered = if (results?.values == null)
+                    ArrayList()
+                else
+                    results.values as ArrayList<Detail>
+                notifyDataSetChanged()
+
+                Log.e("performFiltering: t2 ", "called" + itemsFiltered.size)
+
             }
         }
     }

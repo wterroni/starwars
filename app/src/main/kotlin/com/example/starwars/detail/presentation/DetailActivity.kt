@@ -3,6 +3,7 @@ package com.example.starwars.detail.presentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -12,7 +13,8 @@ import com.example.starwars.databinding.DetailActivityBinding
 import com.example.starwars.detail.domain.model.Detail
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DetailActivity : AppCompatActivity(), ICallDetail {
+
+class DetailActivity : AppCompatActivity(), ICallDetail, SearchView.OnQueryTextListener{
     private val binding by lazy {
         DetailActivityBinding.inflate(layoutInflater)
     }
@@ -29,7 +31,6 @@ class DetailActivity : AppCompatActivity(), ICallDetail {
         super.onCreate(savedInstanceState)
 
         lManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        //categoriesViewModel.getCategories()
 
         setContentView(binding.root)
         setupView()
@@ -40,6 +41,11 @@ class DetailActivity : AppCompatActivity(), ICallDetail {
         setupRecyclewView()
         setListeners()
         setupObservers()
+        setupSearchView()
+    }
+
+    private fun setupSearchView() {
+        binding.searchLayout.searchView.setOnQueryTextListener(this)
     }
 
     private fun setupObservers() {
@@ -53,7 +59,7 @@ class DetailActivity : AppCompatActivity(), ICallDetail {
 
     private fun handleDetail(detail: List<Detail>) {
         binding.titleTextView.text = categoryType
-        detailAdapter.setList(detail)
+        detailAdapter.addData(detail)
     }
 
     private fun handleError(exception: Exception?) {
@@ -97,5 +103,15 @@ class DetailActivity : AppCompatActivity(), ICallDetail {
         ).apply {
             putExtra(BUNDLE_CATEGORY_TYPE, categoryType.name)
         }
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        detailAdapter.filter.filter(query)
+        return false
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        detailAdapter.filter.filter(newText?.uppercase())
+        return false
     }
 }
