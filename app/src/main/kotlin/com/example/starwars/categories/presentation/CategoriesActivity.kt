@@ -1,6 +1,7 @@
 package com.example.starwars.categories.presentation
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -46,6 +47,9 @@ class CategoriesActivity : AppCompatActivity(), ICallCategoryDetail {
     }
 
     private fun handleCategory(categories: Array<Category>) {
+        binding.categoriesList.visibility = View.VISIBLE
+        binding.shimmerViewContainer.stopShimmer()
+        binding.shimmerViewContainer.visibility = View.GONE
         categoriesAdapter.setList(categories)
     }
 

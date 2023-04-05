@@ -3,6 +3,7 @@ package com.example.starwars.detail.presentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -59,6 +60,9 @@ class DetailActivity : AppCompatActivity(), ICallDetail, SearchView.OnQueryTextL
 
     private fun handleDetail(detail: List<Detail>) {
         binding.titleTextView.text = categoryType
+        binding.shimmerViewContainer.stopShimmer()
+        binding.shimmerViewContainer.visibility = View.GONE
+        binding.categoriesList.visibility = View.VISIBLE
         detailAdapter.addData(detail)
     }
 
