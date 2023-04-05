@@ -10,12 +10,13 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.starwars.R
 import com.example.starwars.categories.domain.model.CategoryType
+import com.example.starwars.component.InfoViewState
 import com.example.starwars.databinding.DetailActivityBinding
 import com.example.starwars.detail.domain.model.Detail
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class DetailActivity : AppCompatActivity(), ICallDetail, SearchView.OnQueryTextListener{
+class DetailActivity : AppCompatActivity(), ICallDetail, SearchView.OnQueryTextListener {
     private val binding by lazy {
         DetailActivityBinding.inflate(layoutInflater)
     }
@@ -50,12 +51,30 @@ class DetailActivity : AppCompatActivity(), ICallDetail, SearchView.OnQueryTextL
     }
 
     private fun setupObservers() {
-        detailViewModel.detailOb.observe(this,
+        detailViewModel.detailOb.observe(
+            this,
             Observer(::handleDetail)
         )
-        detailViewModel.detailExceptionOb.observe(this,
+        detailViewModel.loadingOB.observe(
+            this,
+            Observer(::handleLoading)
+        )
+        detailViewModel.detailExceptionOb.observe(
+            this,
             Observer(::handleError)
         )
+    }
+
+    private fun handleLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.shimmerViewContainer.visibility = View.VISIBLE
+            binding.shimmerViewContainer.startShimmer()
+            binding.categoriesList.visibility = View.GONE
+            binding.infoView.visibility = View.GONE
+        } else {
+            binding.shimmerViewContainer.visibility = View.GONE
+            binding.shimmerViewContainer.stopShimmer()
+        }
     }
 
     private fun handleDetail(detail: List<Detail>) {
@@ -67,7 +86,17 @@ class DetailActivity : AppCompatActivity(), ICallDetail, SearchView.OnQueryTextL
     }
 
     private fun handleError(exception: Exception?) {
-        //TODO showErrorView()
+        binding.infoView.visibility = View.VISIBLE
+        binding.infoView.setState(
+            InfoViewState(
+                iconRes = R.drawable.reload,
+                title = getString(R.string.title_error),
+                description = getString(R.string.description_error),
+                iconAction = {
+                    detailViewModel.retryGetDetail(categoryType)
+                }
+            )
+        )
     }
 
     private fun setupRecyclewView() {

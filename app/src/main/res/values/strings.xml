@@ -11,4 +11,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string name="change_list_accessibility">alterar layout da lista</string>
+
+    <string name="title_error">Não foi possível carregar a página, tente novamente.</string>
+    <string name="description_error">Toque no ícone acima para tentar novamente.</string>
 </resources>

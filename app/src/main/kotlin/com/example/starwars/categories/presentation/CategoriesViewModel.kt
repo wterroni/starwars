@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 class CategoriesViewModel(private val interactor: CategoriesInteractor): BaseViewModel() {
 
     val categoriesOb = MutableLiveData<Array<Category>>()
+    val loadingOB = MutableLiveData<Boolean>()
     val categoriesExceptionOb = MutableLiveData<Exception>()
 
     init {
@@ -20,9 +21,16 @@ class CategoriesViewModel(private val interactor: CategoriesInteractor): BaseVie
             try {
                 val categories = interactor.getCategories()
                 categoriesOb.value = categories
+                loadingOB.value = false
             } catch (ex: Exception) {
+                loadingOB.value = false
                 categoriesExceptionOb.value = ex
             }
         }
+    }
+
+    fun retryCategories() {
+        loadingOB.value = true
+        getCategories()
     }
 }

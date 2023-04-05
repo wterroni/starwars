@@ -7,12 +7,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.starwars.R
 import com.example.starwars.categories.domain.model.Category
+import com.example.starwars.component.InfoViewState
 import com.example.starwars.databinding.CategoriesActivityBinding
 import com.example.starwars.detail.presentation.DetailActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CategoriesActivity : AppCompatActivity(), ICallCategoryDetail {
-    //private lateinit var binding: CategoriesActivityBinding
     private val binding by lazy {
         CategoriesActivityBinding.inflate(layoutInflater)
     }
@@ -25,39 +25,62 @@ class CategoriesActivity : AppCompatActivity(), ICallCategoryDetail {
         super.onCreate(savedInstanceState)
 
         lManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        //categoriesViewModel.getCategories()
 
         setContentView(binding.root)
         setupView()
     }
 
     private fun setupView() {
-        setupRecyclewView()
+        setupRecyclerView()
         setListeners()
         setupObservers()
     }
 
     private fun setupObservers() {
-        categoriesViewModel.categoriesOb.observe(this,
+        categoriesViewModel.categoriesOb.observe(
+            this,
             Observer(::handleCategory)
         )
-        categoriesViewModel.categoriesExceptionOb.observe(this,
+        categoriesViewModel.loadingOB.observe(
+            this,
+            Observer(::handleLoading)
+        )
+        categoriesViewModel.categoriesExceptionOb.observe(
+            this,
             Observer(::handleError)
         )
     }
 
+    private fun handleLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.shimmerViewContainer.visibility = View.VISIBLE
+            binding.shimmerViewContainer.startShimmer()
+            binding.categoriesList.visibility = View.GONE
+            binding.infoView.visibility = View.GONE
+        } else {
+            binding.shimmerViewContainer.visibility = View.GONE
+            binding.shimmerViewContainer.stopShimmer()
+        }
+    }
+
     private fun handleCategory(categories: Array<Category>) {
         binding.categoriesList.visibility = View.VISIBLE
-        binding.shimmerViewContainer.stopShimmer()
-        binding.shimmerViewContainer.visibility = View.GONE
         categoriesAdapter.setList(categories)
     }
 
     private fun handleError(exception: Exception?) {
-        //TODO showErrorView()
+        binding.infoView.visibility = View.VISIBLE
+        binding.infoView.setState(
+            InfoViewState(
+                iconRes = R.drawable.reload,
+                title = getString(R.string.title_error),
+                description = getString(R.string.description_error),
+                iconAction = categoriesViewModel::retryCategories
+            )
+        )
     }
 
-    private fun setupRecyclewView() {
+    private fun setupRecyclerView() {
         categoriesAdapter.apply {
             setCallDetail(this@CategoriesActivity)
             setLayoutManager(lManager)

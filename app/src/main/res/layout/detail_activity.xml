@@ -43,6 +43,16 @@
         android:textSize="16sp"
         tools:text="Films"/>
 
+    <com.example.starwars.component.InfoView
+        android:id="@+id/infoView"
+        android:visibility="gone"
+        android:layout_marginTop="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_text_view"/>
+
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_view_container"
         android:layout_width="match_parent"

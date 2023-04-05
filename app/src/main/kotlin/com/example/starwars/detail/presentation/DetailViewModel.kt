@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 class DetailViewModel(private val interactor: DetailInteractor): BaseViewModel() {
 
     val detailOb = MutableLiveData<List<Detail>>()
+    val loadingOB = MutableLiveData<Boolean>()
     val detailExceptionOb = MutableLiveData<Exception>()
 
     fun getDetail(categoryType: String) {
@@ -23,13 +24,20 @@ class DetailViewModel(private val interactor: DetailInteractor): BaseViewModel()
         }
     }
 
+    fun retryGetDetail(categoryType: String) {
+        loadingOB.value = true
+        getDetail(categoryType)
+    }
+
     private fun getFilmsDetail() {
         launch {
             try {
                 val films = interactor.getFilmsDetail()
                 detailOb.value = films
+                loadingOB.value = false
             } catch (ex: Exception) {
                 detailExceptionOb.value = ex
+                loadingOB.value = false
             }
         }
     }
@@ -39,7 +47,9 @@ class DetailViewModel(private val interactor: DetailInteractor): BaseViewModel()
             try {
                 val films = interactor.getPeopleDetail()
                 detailOb.value = films
+                loadingOB.value = false
             } catch (ex: Exception) {
+                loadingOB.value = false
                 detailExceptionOb.value = ex
             }
         }
@@ -50,7 +60,9 @@ class DetailViewModel(private val interactor: DetailInteractor): BaseViewModel()
             try {
                 val films = interactor.getPlanetsDetail()
                 detailOb.value = films
+                loadingOB.value = false
             } catch (ex: Exception) {
+                loadingOB.value = false
                 detailExceptionOb.value = ex
             }
         }
@@ -61,7 +73,9 @@ class DetailViewModel(private val interactor: DetailInteractor): BaseViewModel()
             try {
                 val films = interactor.getSpeciesDetail()
                 detailOb.value = films
+                loadingOB.value = false
             } catch (ex: Exception) {
+                loadingOB.value = false
                 detailExceptionOb.value = ex
             }
         }
@@ -72,7 +86,9 @@ class DetailViewModel(private val interactor: DetailInteractor): BaseViewModel()
             try {
                 val films = interactor.getVehiclesDetail()
                 detailOb.value = films
+                loadingOB.value = false
             } catch (ex: Exception) {
+                loadingOB.value = false
                 detailExceptionOb.value = ex
             }
         }
@@ -83,7 +99,9 @@ class DetailViewModel(private val interactor: DetailInteractor): BaseViewModel()
             try {
                 val films = interactor.getStarshipsDetail()
                 detailOb.value = films
+                loadingOB.value = false
             } catch (ex: Exception) {
+                loadingOB.value = false
                 detailExceptionOb.value = ex
             }
         }
