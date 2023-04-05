@@ -68,14 +68,35 @@ class DetailAdapter(
 
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val textView: TextView = view.findViewById(R.id.name_detail)
+
+        private val labelOne: TextView = view.findViewById(R.id.label_one)
+        private val labelTwo: TextView = view.findViewById(R.id.label_two)
+        private val labelThree: TextView = view.findViewById(R.id.label_three)
+        private val labelFour: TextView = view.findViewById(R.id.label_four)
+        private val labelFive: TextView = view.findViewById(R.id.label_five)
+
+        private val textOne: TextView = view.findViewById(R.id.text_one)
+        private val textTwo: TextView = view.findViewById(R.id.text_two)
+        private val textThree: TextView = view.findViewById(R.id.text_three)
+        private val textFour: TextView = view.findViewById(R.id.text_four)
+        private val textFive: TextView = view.findViewById(R.id.text_five)
+
         private val cardView: CardView = view.findViewById(R.id.card_detail)
         private val imageView: ImageView = view.findViewById(R.id.image_detail)
 
         @SuppressLint("NotifyDataSetChanged")
         fun bind(item: Detail) {
             Picasso.with(itemView.context).load(item.imageUrl).into(imageView)
-            textView.text = item.name
+            labelOne.text = item.labelOne
+            labelTwo.text = item.labelTwo
+            labelThree.text = item.labelThree
+            labelFour.text = item.labelFour
+            labelFive.text = item.labelFive
+            textOne.text = item.textOne
+            textTwo.text = item.textTwo
+            textThree.text = item.textThree
+            textFour.text = item.textFour
+            textFive.text = item.textFive
             cardView.setOnClickListener {
                 call.callDetail(item)
             }
