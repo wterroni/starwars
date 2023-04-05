@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.starwars.R
@@ -31,6 +32,8 @@ class DetailActivity : AppCompatActivity(), ICallDetail, SearchView.OnQueryTextL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
         lManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 

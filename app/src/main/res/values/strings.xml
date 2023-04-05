@@ -14,4 +14,9 @@
 
     <string name="title_error">Não foi possível carregar a página, tente novamente.</string>
     <string name="description_error">Toque no ícone acima para tentar novamente.</string>
+
+    <string name="all">all</string>
+    <string name="favorite">favorites</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
