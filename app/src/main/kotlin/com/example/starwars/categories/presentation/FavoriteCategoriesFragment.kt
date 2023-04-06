@@ -81,8 +81,6 @@ class FavoriteCategoriesFragment : Fragment(), ICallCategoryDetail, IFavoriteHan
     private fun showSuccessView() {
         binding.infoView.visibility = View.GONE
         binding.categoriesList.visibility = View.VISIBLE
-        binding.swipeContainer.isRefreshing = false
-        binding.swipeEmpty.isRefreshing = false
 
     }
 
