@@ -6,14 +6,14 @@ import com.example.starwars.categories.domain.model.CategoryType
 import com.example.starwars.categories.domain.model.FavoriteCategoryModel
 
 interface CategoriesMapper {
-    fun toCategories(categoriesModel: CategoriesModel): Array<Category>
-    fun favoriteToCharacter(favoriteCategory: ArrayList<FavoriteCategoryModel>): ArrayList<Category>
-    fun toFavorite(characterModel: Category): FavoriteCategoryModel
+    fun toCategories(categoriesModel: CategoriesModel): List<Category>
+    fun favoriteToCategory(favoriteCategory: ArrayList<FavoriteCategoryModel>): ArrayList<Category>
+    fun toFavorite(categoryModel: Category): FavoriteCategoryModel
 }
 
 class CategoriesMapperImpl : CategoriesMapper {
-    override fun toCategories(categoriesModel: CategoriesModel): Array<Category> {
-        return arrayOf(
+    override fun toCategories(categoriesModel: CategoriesModel): List<Category> {
+        return listOf(
             Category(
                 id = 1,
                 url = categoriesModel.films,
@@ -65,7 +65,7 @@ class CategoriesMapperImpl : CategoriesMapper {
         )
     }
 
-    override fun favoriteToCharacter(favoriteCategory: ArrayList<FavoriteCategoryModel>): ArrayList<Category> {
+    override fun favoriteToCategory(favoriteCategory: ArrayList<FavoriteCategoryModel>): ArrayList<Category> {
         val categories = ArrayList<Category>()
 
         for (category in favoriteCategory) {
@@ -84,14 +84,14 @@ class CategoriesMapperImpl : CategoriesMapper {
         return categories
     }
 
-    override fun toFavorite(characterModel: Category): FavoriteCategoryModel {
+    override fun toFavorite(categoryModel: Category): FavoriteCategoryModel {
         return FavoriteCategoryModel(
-            characterModel.id,
-            characterModel.url,
-            characterModel.name,
-            characterModel.imageUrl,
-            characterModel.categoryType,
-            characterModel.isFavority,
+            categoryModel.id,
+            categoryModel.url,
+            categoryModel.name,
+            categoryModel.imageUrl,
+            categoryModel.categoryType,
+            categoryModel.isFavority,
         )
     }
 }

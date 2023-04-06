@@ -17,7 +17,7 @@ val categoriesViewModelsModule = module {
     viewModel { CategoriesViewModel(get()) }
 
     single { CategoriesInteractorImpl(get(), get()) } bind CategoriesInteractor::class
-    single { CategoriesRepositoryImpl(get()) } bind CategoriesRepository::class
+    single { CategoriesRepositoryImpl(get(), get()) } bind CategoriesRepository::class
     single { CategoriesMapperImpl() } bind CategoriesMapper::class
     single { CategoryUiModelImpl(get()) } bind CategoryUiModel::class
 }

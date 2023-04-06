@@ -13,14 +13,15 @@ import com.example.starwars.categories.domain.model.Category
 import com.example.starwars.component.InfoViewState
 import com.example.starwars.databinding.FragmentAllCategoriesBinding
 import com.example.starwars.detail.presentation.DetailActivity
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AllCategoriesFragment : Fragment(), ICallCategoryDetail {
+class AllCategoriesFragment : Fragment(), ICallCategoryDetail, IFavoriteHandle {
     private lateinit var binding: FragmentAllCategoriesBinding
 
     private val categoriesAdapter: CategoriesAdapter by lazy { CategoriesAdapter() }
     private lateinit var lManager: StaggeredGridLayoutManager
-    private val categoriesViewModel: CategoriesViewModel by viewModel()
+    private val categoriesViewModel: CategoriesViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,7 +71,7 @@ class AllCategoriesFragment : Fragment(), ICallCategoryDetail {
         }
     }
 
-    private fun handleCategory(categories: Array<Category>) {
+    private fun handleCategory(categories: List<Category>) {
         binding.categoriesList.visibility = View.VISIBLE
         categoriesAdapter.setList(categories)
     }
@@ -90,6 +91,7 @@ class AllCategoriesFragment : Fragment(), ICallCategoryDetail {
     private fun setupRecyclerView() {
         categoriesAdapter.apply {
             setCallDetail(this@AllCategoriesFragment)
+            setFavoriteHandle(this@AllCategoriesFragment)
             setLayoutManager(lManager)
         }
         binding.categoriesList.apply {
@@ -113,5 +115,18 @@ class AllCategoriesFragment : Fragment(), ICallCategoryDetail {
             }
             categoriesAdapter.notifyItemRangeChanged(0, categoriesAdapter.itemCount ?: 0)
         }
+    }
+
+    override fun saveFavorite(categoryModel: Category) {
+        categoryModel.isFavority = true
+        categoriesViewModel.saveFavorite(
+            categoryModel
+        )
+    }
+
+    override fun deleteFavorite(categoryModel: Category) {
+        categoriesViewModel.removeFavorite(
+            categoryModel
+        )
     }
 }

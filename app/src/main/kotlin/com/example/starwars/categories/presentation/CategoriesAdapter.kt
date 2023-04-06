@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -18,6 +19,7 @@ class CategoriesAdapter(
 
     private val items: MutableList<Category> = mutableListOf()
     private lateinit var call: ICallCategoryDetail
+    private lateinit var favoriteHandle: IFavoriteHandle
     private var layoutManager: StaggeredGridLayoutManager? = null
 
     enum class ViewType {
@@ -26,7 +28,7 @@ class CategoriesAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setList(newItems: Array<Category>) {
+    fun setList(newItems: List<Category>) {
         items.clear()
         items.addAll(newItems)
         notifyDataSetChanged()
@@ -34,6 +36,10 @@ class CategoriesAdapter(
 
     fun setCallDetail(call: ICallCategoryDetail) {
         this.call = call
+    }
+
+    fun setFavoriteHandle(favoriteHandle: IFavoriteHandle) {
+        this.favoriteHandle = favoriteHandle
     }
 
     fun setLayoutManager(layoutManager: StaggeredGridLayoutManager) {
@@ -69,13 +75,30 @@ class CategoriesAdapter(
         private val textView: TextView = view.findViewById(R.id.name_categories)
         private val cardView: CardView = view.findViewById(R.id.categoriesCard)
         private val imageView: ImageView = view.findViewById(R.id.image_categories)
+        private val btnFav: ImageButton = view.findViewById(R.id.btn_fav)
 
         @SuppressLint("NotifyDataSetChanged")
         fun bind(item: Category) {
             Picasso.with(itemView.context).load(item.imageUrl).into(imageView)
             textView.text = item.name
+            if (item.isFavority)
+                btnFav.setImageResource(R.drawable.ic_star_filled)
+            else
+                btnFav.setImageResource(R.drawable.ic_star)
             cardView.setOnClickListener {
                 call.callCategoryDetail(item)
+            }
+            btnFav.setOnClickListener {
+                if (item.isFavority) {
+                    favoriteHandle.deleteFavorite(item)
+
+                } else {
+                    favoriteHandle.saveFavorite(item)
+
+                }
+
+                item.isFavority = !item.isFavority
+                notifyDataSetChanged()
             }
         }
     }

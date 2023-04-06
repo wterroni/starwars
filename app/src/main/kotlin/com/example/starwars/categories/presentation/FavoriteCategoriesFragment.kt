@@ -10,18 +10,17 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.starwars.R
 import com.example.starwars.categories.domain.model.Category
 import com.example.starwars.component.InfoViewState
-import com.example.starwars.databinding.FragmentAllCategoriesBinding
 import com.example.starwars.databinding.FragmentFavoriteCategoriesBinding
 import com.example.starwars.detail.presentation.DetailActivity
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
-class FavoriteCategoriesFragment : Fragment(), ICallCategoryDetail {
+class FavoriteCategoriesFragment : Fragment(), ICallCategoryDetail, IFavoriteHandle {
     private lateinit var binding: FragmentFavoriteCategoriesBinding
 
     private val categoriesAdapter: CategoriesAdapter by lazy { CategoriesAdapter() }
     private lateinit var lManager: StaggeredGridLayoutManager
-    private val categoriesViewModel: CategoriesViewModel by viewModel()
+    private val categoriesViewModel: CategoriesViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +44,7 @@ class FavoriteCategoriesFragment : Fragment(), ICallCategoryDetail {
     }
 
     private fun setupObservers() {
-        categoriesViewModel.categoriesOb.observe(
+        categoriesViewModel.favoriteCategoryListOb.observe(
             viewLifecycleOwner,
             Observer(::handleCategory)
         )
@@ -71,9 +70,30 @@ class FavoriteCategoriesFragment : Fragment(), ICallCategoryDetail {
         }
     }
 
-    private fun handleCategory(categories: Array<Category>) {
-        binding.categoriesList.visibility = View.VISIBLE
+    private fun handleCategory(categories: List<Category>) {
         categoriesAdapter.setList(categories)
+        if (categories.isNotEmpty()) {
+            showSuccessView()
+        } else
+            showEmptyView()
+    }
+
+    private fun showSuccessView() {
+        binding.infoView.visibility = View.GONE
+        binding.categoriesList.visibility = View.VISIBLE
+        binding.swipeContainer.isRefreshing = false
+        binding.swipeEmpty.isRefreshing = false
+
+    }
+
+    private fun showEmptyView() {
+        binding.infoView.visibility = View.VISIBLE
+        binding.infoView.setState(
+            InfoViewState(
+                iconRes = R.drawable.atention,
+                title = getString(R.string.title_empty_error)
+            )
+        )
     }
 
     private fun handleError(exception: Exception?) {
@@ -91,6 +111,7 @@ class FavoriteCategoriesFragment : Fragment(), ICallCategoryDetail {
     private fun setupRecyclerView() {
         categoriesAdapter.apply {
             setCallDetail(this@FavoriteCategoriesFragment)
+            setFavoriteHandle(this@FavoriteCategoriesFragment)
             setLayoutManager(lManager)
         }
         binding.categoriesList.apply {
@@ -119,5 +140,17 @@ class FavoriteCategoriesFragment : Fragment(), ICallCategoryDetail {
             }
             categoriesAdapter.notifyItemRangeChanged(0, categoriesAdapter.itemCount ?: 0)
         }
+    }
+
+    override fun saveFavorite(categoryModel: Category) {
+        categoriesViewModel.saveFavorite(
+            categoryModel
+        )
+    }
+
+    override fun deleteFavorite(categoryModel: Category) {
+        categoriesViewModel.removeFavorite(
+            categoryModel
+        )
     }
 }

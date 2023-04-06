@@ -42,8 +42,8 @@ class InfoView @JvmOverloads constructor(
             field = value
             value?.let {
                 binding.descriptionTextView.text = value
-                showTitle()
-            } ?: hideTitle()
+                showDescription()
+            } ?: hideDescription()
         }
 
     private var onClickIcon: () -> Unit = {}

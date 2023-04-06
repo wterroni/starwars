@@ -25,9 +25,9 @@ class CategoriesRepositoryImpl(
 
     override fun getFavorite(): ArrayList<FavoriteCategoryModel> = uiModel.getFavorite()
 
-    override fun saveFavorite(characterModel: FavoriteCategoryModel) =
-        uiModel.saveFavorite(characterModel)
+    override fun saveFavorite(categoryModel: FavoriteCategoryModel) =
+        uiModel.saveFavorite(categoryModel)
 
-    override fun removeFavorite(characterModel: FavoriteCategoryModel) =
-        uiModel.removeFavorite(characterModel)
+    override fun removeFavorite(categoryModel: FavoriteCategoryModel) =
+        uiModel.removeFavorite(categoryModel)
 }
