@@ -65,4 +65,7 @@ dependencies {
 
     // shimmer
     implementation 'com.facebook.shimmer:shimmer:0.3.0'
+
+    //mockk
+    testImplementation "io.mockk:mockk:1.10.0"
 }
