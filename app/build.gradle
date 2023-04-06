@@ -66,6 +66,8 @@ dependencies {
     // shimmer
     implementation 'com.facebook.shimmer:shimmer:0.3.0'
 
-    //mockk
+    //test
     testImplementation "io.mockk:mockk:1.10.0"
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0'
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
 }
