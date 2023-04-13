@@ -23,7 +23,6 @@ class DetailAdapter(
 
     var items: MutableList<Detail> = mutableListOf()
     var itemsFiltered: MutableList<Detail> = mutableListOf()
-    private lateinit var call: ICallDetail
     private var layoutManager: StaggeredGridLayoutManager? = null
 
     enum class ViewType {
@@ -35,10 +34,6 @@ class DetailAdapter(
         items = list as ArrayList<Detail>
         itemsFiltered = items
         notifyDataSetChanged()
-    }
-
-    fun setCallDetail(call: ICallDetail) {
-        this.call = call
     }
 
     fun setLayoutManager(layoutManager: StaggeredGridLayoutManager) {
@@ -100,9 +95,6 @@ class DetailAdapter(
             textThree.text = item.textThree
             textFour.text = item.textFour
             textFive.text = item.textFive
-            cardView.setOnClickListener {
-                call.callDetail(item)
-            }
         }
     }
 

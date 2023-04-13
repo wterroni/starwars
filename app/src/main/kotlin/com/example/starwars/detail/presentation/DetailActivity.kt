@@ -17,7 +17,7 @@ import com.example.starwars.detail.domain.model.Detail
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class DetailActivity : AppCompatActivity(), ICallDetail, SearchView.OnQueryTextListener {
+class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private val binding by lazy {
         DetailActivityBinding.inflate(layoutInflater)
     }
@@ -104,7 +104,6 @@ class DetailActivity : AppCompatActivity(), ICallDetail, SearchView.OnQueryTextL
 
     private fun setupRecyclewView() {
         detailAdapter.apply {
-            setCallDetail(this@DetailActivity)
             setLayoutManager(lManager)
         }
         binding.categoriesList.apply {
@@ -124,10 +123,6 @@ class DetailActivity : AppCompatActivity(), ICallDetail, SearchView.OnQueryTextL
             }
             detailAdapter.notifyItemRangeChanged(0, detailAdapter.itemCount ?: 0)
         }
-    }
-
-    override fun callDetail(detail: Detail) {
-        TODO("Not yet implemented")
     }
 
     companion object {
